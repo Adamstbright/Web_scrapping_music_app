@@ -10,10 +10,19 @@ HEADERS = {
 
 def scrape(url):
     """Scrape the page source from the URL """
-    resonse = requests.get(url, headers=HEADERS)
-    source = resonse.text
+    response = requests.get(url, headers=HEADERS)
+    source = response.text
     return source
 
-if __name__ == "__main__":
-    print(scrape(URL))
 
+def extract(source):
+    """extract data from the web page"""
+    extractor = selectorlib.Extractor.from_yaml_file("extract.yaml")
+    value = extractor.extract(source)["tours"]
+    return value
+
+
+if __name__ == "__main__":
+    scraped = (scrape(URL))
+    extracted = extract(scraped)
+    print(extracted)
