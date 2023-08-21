@@ -45,7 +45,7 @@ def send_email(message):
 
 
 def store(extracted):
-    row = extracted.slipt("'")
+    row = extracted.split(",")
     row = [items.strip() for items in row]
     cursor = connection.cursor()
     cursor.execute("INSERT INTO events VALUES(?,?,?)", row)
@@ -54,7 +54,7 @@ def store(extracted):
 
 
 def read(extracted):
-    row = extracted.slipt("'")
+    row = extracted.split(",")
     row = [items.strip() for items in row]
     band, city, date = row
     cursor = connection.cursor()
@@ -80,5 +80,4 @@ Regards,
             if not row:
                 store(extracted)
                 send_email(message)
-
         time.sleep(2)
